@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,6 @@ import com.tvd.new_subdiv.R;
 import com.tvd.new_subdiv.activities.ConsumerBilling;
 import com.tvd.new_subdiv.database.Databasehelper;
 import com.tvd.new_subdiv.model.GetSet_Mast;
-import com.tvd.new_subdiv.model.GetSet_MastCust;
 import com.tvd.new_subdiv.model.Subdiv_Details;
 import com.tvd.new_subdiv.values.FunctionCall;
 
@@ -44,7 +44,7 @@ public class Billing_Fragment extends Fragment implements View.OnClickListener {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_billing, container, false);
         initialize();
         billing_data_count.setText(Mast_Cust_LIst.size() + "");

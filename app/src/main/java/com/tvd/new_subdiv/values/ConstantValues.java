@@ -6,6 +6,9 @@ public class ConstantValues {
     public static final String DIR_DATABASE = "databases";
     public static final String ZIP_EXTRACT_PASSWORD = "12345";
     public static final String BILLING_CUT_OFF_TIME = "7:00pm";
+    public static final int LT1_MIN = 40;
+    public static final double RENT_SINGLE_PHASE = 375.00;
+    public static final double RENT_THREE_PHASE = 500.00;
 
     public static final int BILLING_ERROR =1;
     public static final int BILLINGSTS_DLG=2;

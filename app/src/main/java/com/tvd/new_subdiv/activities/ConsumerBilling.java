@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.tvd.new_subdiv.R;
 import com.tvd.new_subdiv.database.Databasehelper;
 import com.tvd.new_subdiv.model.GetSet_Mast;
-import com.tvd.new_subdiv.model.GetSet_MastCust;
-import com.tvd.new_subdiv.model.GetSet_Mast_Out;
 import com.tvd.new_subdiv.model.Subdiv_Details;
 import com.tvd.new_subdiv.values.FunctionCall;
 

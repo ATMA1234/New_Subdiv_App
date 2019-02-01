@@ -1633,4 +1633,23 @@ public class GetSet_Mast {
     public void setPREPAID_RENT_GST(String PREPAID_RENT_GST) {
         this.PREPAID_RENT_GST = PREPAID_RENT_GST;
     }
+
+    public String getTax_new_days() {
+        return tax_new_days;
+    }
+
+    public void setTax_new_days(String tax_new_days) {
+        this.tax_new_days = tax_new_days;
+    }
+
+    public String getTax_old_days() {
+        return tax_old_days;
+    }
+
+    public void setTax_old_days(String tax_old_days) {
+        this.tax_old_days = tax_old_days;
+    }
+
+    private String tax_new_days;
+    private String tax_old_days;
 }
