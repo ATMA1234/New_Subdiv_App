@@ -86,4 +86,53 @@ public class FunctionCall {
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
+    public String CalculateDays(String Prev_date, String Pres_date) {
+        Prev_date = changedateformat(Prev_date, "/");
+        Pres_date = changedateformat(Pres_date, "/");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        Date Date1 = null;
+        Date Date2 = null;
+        try {
+            Date1 = format.parse(Prev_date);
+            Date2 = format.parse(Pres_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long result = 0;
+        if (Date2 != null)
+            result = (Date2.getTime() - Date1.getTime()) / (24 * 60 * 60 * 1000);
+        return "" + result;
+    }
+    public String changedateformat(String datevalue, String changedivider) {
+        Date date = null;
+        if ((datevalue.substring(datevalue.length() - 5, datevalue.length() - 4)).equals("/")) {
+            try {
+                date = new SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(datevalue);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            if ((datevalue.substring(datevalue.length() - 5, datevalue.length() - 4)).equals("-")) {
+                try {
+                    date = new SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(datevalue);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                if (datevalue.length() == 8) {
+                    try {
+                        date = new SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(datevalue.substring(0, 2) + "-"
+                                + datevalue.substring(2, 4) + "-" + datevalue.substring(4));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        String format = sdf.format(c.getTime());
+        return format.substring(0, 2) + changedivider + format.substring(3, 5) + changedivider + format.substring(6, 10);
+    }
 }

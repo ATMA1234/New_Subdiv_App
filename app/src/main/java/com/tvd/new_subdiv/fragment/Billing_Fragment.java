@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.tvd.new_subdiv.R;
 import com.tvd.new_subdiv.activities.ConsumerBilling;
 import com.tvd.new_subdiv.database.Databasehelper;
+import com.tvd.new_subdiv.model.GetSet_Mast;
 import com.tvd.new_subdiv.model.GetSet_MastCust;
 import com.tvd.new_subdiv.model.Subdiv_Details;
 import com.tvd.new_subdiv.values.FunctionCall;
@@ -31,7 +32,7 @@ import static com.tvd.new_subdiv.values.ConstantValues.BILLING_TIME_OVER;
 public class Billing_Fragment extends Fragment implements View.OnClickListener {
     View view;
     Databasehelper dbh;
-    List<GetSet_MastCust> Mast_Cust_LIst;
+    List<GetSet_Mast> Mast_Cust_LIst;
     List<Subdiv_Details> Subdiv_List;
     TextView billing_data_count;
     FunctionCall fcall;
@@ -53,6 +54,7 @@ public class Billing_Fragment extends Fragment implements View.OnClickListener {
     private void initialize() {
         billing_data_count = view.findViewById(R.id.txt_billing_data_count);
         billing_button = view.findViewById(R.id.btn_billing);
+        billing_button.setOnClickListener(this);
         dbh = new Databasehelper(getActivity());
         dbh.openDatabase();
         Mast_Cust_LIst = new ArrayList<>();

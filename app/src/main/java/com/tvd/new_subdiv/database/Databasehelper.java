@@ -1,5 +1,6 @@
 package com.tvd.new_subdiv.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -10,7 +11,9 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.tvd.new_subdiv.model.GetSet_Mast;
 import com.tvd.new_subdiv.model.GetSet_MastCust;
+import com.tvd.new_subdiv.model.GetSet_Mast_Out;
 import com.tvd.new_subdiv.model.Subdiv_Details;
 import com.tvd.new_subdiv.values.FunctionCall;
 
@@ -194,8 +197,8 @@ public class Databasehelper {
         return getJSONArray(myDataBase.rawQuery("select * from MAST_CUST", null));
     }
     //Binding mast_cust values into GetSet_MastCust pojo class
-    public List<GetSet_MastCust> getsetMastCustDetails(){
-        return Arrays.asList(new Gson().fromJson(getMastCust(), GetSet_MastCust[].class));
+    public List<GetSet_Mast> getsetMastCustDetails(){
+        return Arrays.asList(new Gson().fromJson(getMastCust(), GetSet_Mast[].class));
     }
     //For Reading Subdiv_details values
     private String getSubdivDetails(){
@@ -203,6 +206,40 @@ public class Databasehelper {
     }
     //Binding subdiv_details values into Subdiv_Details
     public List<Subdiv_Details> getsetSubdiv_Details(){
-        return Arrays.asList(new Gson().fromJson(getMastCust(), Subdiv_Details[].class));
+        return Arrays.asList(new Gson().fromJson(getSubdivDetails(), Subdiv_Details[].class));
     }
+    //For Getting mast_cust details based on billed record no
+    private String getBilledRecord(){
+        return getJSONArray(myDataBase.rawQuery("select * from mast_cust,subdiv_details where mast_cust._id = (select billed_record from subdiv_details)", null));
+    }
+    public List<GetSet_Mast> getMastCustDetails2(){
+        return Arrays.asList(new Gson().fromJson(getBilledRecord(), GetSet_Mast[].class));
+    }
+
+    public Cursor updateDLrecord(String monthdiff) {
+        return myDataBase.rawQuery("update MAST_CUST set DLCOUNT = '" + monthdiff + "' where rowid = (select billed_record from subdiv_details)", null);
+    }
+    //Update the Billed Record
+    public void updatebill(int billUpdate) {
+        ContentValues cv = new ContentValues();
+        cv.put("Billed_Record", billUpdate);
+        myDataBase.update("SUBDIV_DETAILS", cv, "Billed_Record", null);
+    }
+
+    //For getting unbilled record
+    public String getUnBilledRecordData() {
+        return getJSONArray(myDataBase.rawQuery("select * from mast_cust where CONSNO not in (select CONSNO from mast_out) and _id = (select billed_record from subdiv_details)", null));
+    }
+    public List<GetSet_Mast> getMastCust_UnbilledRecordData(){
+        return Arrays.asList(new Gson().fromJson(getUnBilledRecordData(),GetSet_Mast[].class));
+    }
+
+    //FOr getting DLbilled record
+    public String getDLBilledRecord() {
+        return getJSONArray(myDataBase.rawQuery("select * from MAST_OUT where PRES_STS = '1' and _id = (select billed_record from subdiv_details)", null));
+    }
+    public List<GetSet_Mast> getDLBilledRecordData(){
+        return Arrays.asList(new Gson().fromJson(getDLBilledRecord(),GetSet_Mast[].class));
+    }
+
 }
